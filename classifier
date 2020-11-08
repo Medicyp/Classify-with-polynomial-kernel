@@ -1,0 +1,30 @@
+import numpy as np
+import math
+def phi(coord):
+  phi=np.array([coord[0]*coord[0],math.sqrt(2)*coord[0]*coord[1],coord[1]*coord[1]])
+  return phi
+
+label_table=np.array([[-1],[-1],[-1],[-1],[-1],[1],[1],[1],[1],[1]])
+coord_table=np.array([[0,0],[2,0],[1,1],[0,2],[3,3],[4,1],[5,2],[1,4],[4,4],[5,5]])
+mis_table=np.array([[1],[65],[11],[31],[72],[30],[0],[21],[4],[15]])
+
+
+
+theta_0=0
+theta=np.array([0,0,0])
+
+
+for i in range(10):
+  theta_0=theta_0+label_table[i]*mis_table[i]
+  theta=theta+label_table[i]*mis_table[i]*phi(coord_table[i])
+
+print('theta_0=', theta_0)
+print('theta=', theta)
+
+def verif(feature_vector,label):
+
+  verif=label*(theta.dot(feature_vector)+theta_0)
+  return verif
+
+for i in range(10):
+  print(verif(phi(coord_table[i]),label_table[i]))
